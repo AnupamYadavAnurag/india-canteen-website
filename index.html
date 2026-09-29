@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0b" />
+  <title>India Canteen | Live • Love • Eat</title>
+  <meta name="description" content="India Canteen digital menu with WhatsApp ordering and instant bill generation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6efe2; --paper:#fffaf0; --ink:#171717; --muted:#6e6559;
+      --orange:#f36c0b; --orange2:#ff9b22; --teal:#087f86; --green:#2d7d32;
+      --red:#c62828; --line:#dfcdb1; --dark:#090909; --white:#fff;
+      --shadow:0 18px 50px rgba(35,22,8,.12);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",sans-serif}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    .topbar{background:#0b0b0b;color:#fff;padding:9px 18px;text-align:center;font-size:13px;letter-spacing:.2px}
+    header{
+      background:
+        radial-gradient(circle at 12% 30%, rgba(255,139,0,.18), transparent 28%),
+        radial-gradient(circle at 90% 15%, rgba(0,184,194,.15), transparent 30%),
+        linear-gradient(135deg,#090909,#161616);
+      color:#fff;padding:26px 18px 34px;position:relative;overflow:hidden
+    }
+    header:after{content:"";position:absolute;inset:auto -5% -65px;height:140px;background:var(--bg);border-radius:50% 50% 0 0/50% 50% 0 0}
+    .hero{max-width:1200px;margin:auto;position:relative;z-index:1}
+    .brand{display:flex;align-items:center;justify-content:center;gap:18px}
+    .logo{
+      width:92px;height:92px;border:2px solid var(--orange2);border-radius:28px;
+      display:grid;place-items:center;background:#0d0d0d;box-shadow:0 0 0 6px rgba(255,133,0,.05),inset 0 0 25px rgba(255,139,0,.12);
+      font-family:Georgia,serif;font-size:34px;font-weight:800;color:#00a8b2
+    }
+    .brand h1{font-family:"Playfair Display",serif;font-size:clamp(42px,7vw,76px);line-height:.78;margin:0;color:#08aeb9}
+    .brand h1 span{display:block;color:#ff7800;font-size:.63em;margin-left:2px}
+    .tagline{text-align:center;font-weight:700;letter-spacing:5px;font-size:12px;margin-top:14px;color:#fff}
+    .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:25px}
+    .btn{border:0;border-radius:999px;padding:12px 18px;font-weight:800;transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--orange);color:#fff}.btn-dark{background:#222;color:#fff}.btn-light{background:#fff;color:#111}
+    .container{max-width:1200px;margin:auto;padding:28px 18px 120px}
+    .toolbar{position:sticky;top:0;z-index:20;background:rgba(246,239,226,.92);backdrop-filter:blur(12px);padding:12px 0;border-bottom:1px solid rgba(223,205,177,.65)}
+    .toolbar-inner{max-width:1200px;margin:auto;padding:0 18px;display:flex;gap:10px;align-items:center}
+    .search{flex:1;position:relative}
+    .search input{width:100%;border:1px solid var(--line);background:#fffaf2;border-radius:14px;padding:13px 16px 13px 42px;outline:none}
+    .search span{position:absolute;left:14px;top:10px;font-size:20px}
+    .cart-pill{white-space:nowrap;background:#111;color:#fff;border:0;border-radius:14px;padding:12px 15px;font-weight:800}
+    .chips{display:flex;gap:8px;overflow:auto;padding:8px 0 2px;scrollbar-width:none}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{border:1px solid var(--line);background:#fff8ed;border-radius:999px;padding:9px 13px;white-space:nowrap;font-weight:700;font-size:13px}
+    .chip.active{background:var(--teal);border-color:var(--teal);color:#fff}
+    .section{margin-top:32px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
+    .section-title{display:flex;align-items:center;gap:10px}
+    .section-title h2{font-family:"Playfair Display",serif;font-size:29px;margin:0}
+    .section-title .bar{width:9px;height:36px;border-radius:8px;background:linear-gradient(var(--orange),var(--orange2))}
+    .count{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .card{background:rgba(255,250,240,.9);border:1px solid var(--line);border-radius:18px;padding:17px;box-shadow:0 7px 20px rgba(42,28,9,.06);display:flex;flex-direction:column;min-height:205px}
+    .card-top{display:flex;justify-content:space-between;gap:12px}
+    .card h3{font-size:17px;line-height:1.15;margin:0 0 7px}
+    .desc{font-size:12.5px;color:var(--muted);line-height:1.45;margin:0 0 12px}
+    .price{color:var(--red);font-size:17px;font-weight:900;white-space:nowrap}
+    .variant-label{font-size:11px;color:#746a5c;font-weight:700;margin:2px 0 5px}
+    .variant-select{width:100%;padding:9px;border:1px solid var(--line);border-radius:10px;background:#fff;margin-bottom:10px}
+    .card-actions{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .add-btn,.order-btn{border:0;border-radius:11px;padding:10px;font-weight:800}
+    .add-btn{background:#eaf5f0;color:#075e62}.order-btn{background:var(--orange);color:#fff}
+    .empty{display:none;padding:40px;text-align:center;background:#fffaf0;border:1px dashed var(--line);border-radius:18px;color:var(--muted)}
+    .highlights{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+    .highlight{border-radius:18px;overflow:hidden;background:#111;box-shadow:var(--shadow)}
+    .highlight img{width:100%;display:block;aspect-ratio:2/3;object-fit:cover}
+    .highlight figcaption{color:#fff;padding:11px 13px;font-weight:800;font-size:13px}
+    footer{background:#0b0b0b;color:#fff;padding:36px 18px;text-align:center}
+    footer h3{font-family:"Playfair Display",serif;font-size:28px;margin:0 0 6px;color:#08aeb9}
+    footer p{margin:6px;color:#bbb;font-size:13px}
+    .floating-cart{position:fixed;right:18px;bottom:18px;z-index:30;background:var(--orange);color:#fff;border:0;border-radius:999px;padding:14px 18px;font-weight:900;box-shadow:0 12px 35px rgba(243,108,11,.35);display:none}
+    .drawer-backdrop,.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:50;display:none}
+    .drawer{position:absolute;right:0;top:0;height:100%;width:min(480px,100%);background:#fffaf0;display:flex;flex-direction:column}
+    .drawer-head{padding:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .drawer-head h2{margin:0;font-family:"Playfair Display",serif}
+    .close{border:0;background:#eee2d2;width:38px;height:38px;border-radius:50%;font-weight:900}
+    .cart-items{flex:1;overflow:auto;padding:14px}
+    .cart-row{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:10px}
+    .cart-main{display:flex;justify-content:space-between;gap:12px}
+    .cart-name{font-weight:800}.cart-meta{font-size:11px;color:var(--muted);margin-top:4px}
+    .qty{display:flex;align-items:center;gap:8px;margin-top:10px}
+    .qty button{border:0;background:#eee2d2;width:28px;height:28px;border-radius:8px;font-weight:900}
+    .remove{margin-left:auto;border:0;background:transparent;color:#b33;font-size:12px;font-weight:800}
+    .cart-foot{padding:16px;border-top:1px solid var(--line);background:#fff}
+    .totals div{display:flex;justify-content:space-between;margin:6px 0}
+    .grand{font-size:19px;font-weight:900;padding-top:8px;border-top:1px dashed #c9b595}
+    .checkout-btn{width:100%;margin-top:12px;border:0;border-radius:13px;padding:14px;background:#1c8b55;color:#fff;font-weight:900}
+    .modal-backdrop{align-items:center;justify-content:center;padding:18px}
+    .modal{background:#fffaf0;border-radius:20px;max-width:620px;width:100%;max-height:92vh;overflow:auto;box-shadow:var(--shadow)}
+    .modal-head{padding:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .modal-head h2{margin:0;font-family:"Playfair Display",serif}
+    .form{padding:18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+    .field input,.field select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff}
+    .bill-preview{background:#fff;border:1px dashed #bda987;border-radius:14px;padding:16px;margin-top:14px}
+    .bill-head{text-align:center;border-bottom:1px dashed #bbb;padding-bottom:10px;margin-bottom:10px}
+    .bill-head h3{margin:0;font-family:"Playfair Display",serif;font-size:24px}
+    .bill-line{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin:7px 0}
+    .bill-total{border-top:1px solid #222;padding-top:9px;margin-top:10px;font-size:18px;font-weight:900}
+    .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+    .whatsapp{background:#1c8b55;color:#fff;border:0;border-radius:12px;padding:13px;font-weight:900}
+    .print{background:#111;color:#fff;border:0;border-radius:12px;padding:13px;font-weight:900}
+    .notice{font-size:11px;color:#766c5f;margin-top:8px}
+    .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(30px);background:#111;color:#fff;padding:12px 16px;border-radius:999px;z-index:100;opacity:0;pointer-events:none;transition:.25s;font-size:13px}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){
+      .brand{gap:10px}.logo{width:70px;height:70px;font-size:26px;border-radius:21px}.brand h1{font-size:47px}
+      .toolbar-inner{display:block}.cart-pill{position:absolute;right:18px;top:12px}.search{padding-right:98px}
+      .grid{grid-template-columns:1fr}.highlights{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}
+      .card{min-height:180px}
+    }
+    @media print{
+      body *{visibility:hidden!important}
+      #billModal,#billModal *{visibility:visible!important}
+      #billModal{position:absolute;inset:0!important;background:#fff!important;padding:0!important}
+      .modal{box-shadow:none!important;max-width:none!important}
+      .modal-head,.form>h3,.form>.field,.modal-actions,.notice{display:none!important}
+      .bill-preview{border:0!important;margin:0!important}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">🍴 Good Food • Good Mood • Good Life &nbsp; | &nbsp; Prices inclusive of taxes</div>
+  <header>
+    <div class="hero">
+      <div class="brand">
+        <div class="logo">ic</div>
+        <div><h1>india<span>canteen</span></h1></div>
+      </div>
+      <div class="tagline">LIVE • LOVE • EAT</div>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="scrollToMenu()">View Menu</button>
+        <button class="btn btn-light" onclick="openCart()">🛒 Cart <span id="heroCount">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <div class="search"><span>⌕</span><input id="search" placeholder="Search pizza, biryani, momo, shake..." oninput="renderMenu()"></div>
+      <button class="cart-pill" onclick="openCart()">🛒 <span id="cartCount">0</span> • ₹<span id="cartTotal">0</span></button>
+      <div id="chips" class="chips"></div>
+    </div>
+  </div>
+
+  <main class="container" id="menu">
+    <div id="menuSections"></div>
+    <div id="empty" class="empty">No menu item found. Try another search.</div>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title"><div class="bar"></div><h2>Our Menu</h2></div>
+        <div class="count">Tap Add to build your order</div>
+      </div>
+      <div class="highlights">
+        <figure class="highlight"><img src="assets/menu-page-1.png" alt="India Canteen menu page 1"><figcaption>Signature meals & Indian • Chinese favourites</figcaption></figure>
+        <figure class="highlight"><img src="assets/menu-page-2.png" alt="India Canteen menu page 2"><figcaption>Chicken • Biryani • Beverages • Desserts</figcaption></figure>
+        <figure class="highlight"><img src="assets/menu-page-3.png" alt="India Canteen student special menu"><figcaption>Student Special • Maggi • Momo • Burgers</figcaption></figure>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <h3>india canteen</h3>
+    <p>LIVE • LOVE • EAT</p>
+    <p>Made with ❤️ for students & food lovers.</p>
+  </footer>
+
+  <button class="floating-cart" id="floatingCart" onclick="openCart()">🛒 View Cart • ₹<span id="floatTotal">0</span></button>
+
+  <div class="drawer-backdrop" id="cartBackdrop" onclick="if(event.target===this)closeCart()">
+    <aside class="drawer">
+      <div class="drawer-head"><h2>Your Order</h2><button class="close" onclick="closeCart()">×</button></div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-foot">
+        <div class="totals">
+          <div><span>Items</span><strong id="cartQty">0</strong></div>
+          <div><span>Subtotal</span><strong>₹<span id="subtotal">0</span></strong></div>
+          <div><span>Tax</span><strong>Included</strong></div>
+          <div class="grand"><span>Total</span><strong>₹<span id="grandTotal">0</span></strong></div>
+        </div>
+        <button class="checkout-btn" onclick="openBill()">Generate Bill & Order on WhatsApp</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="billModal">
+    <div class="modal">
+      <div class="modal-head"><h2>Bill & WhatsApp Order</h2><button class="close" onclick="closeBill()">×</button></div>
+      <div class="form">
+        <h3>Customer details</h3>
+        <div class="form-grid">
+          <div class="field"><label>Name *</label><input id="customerName" placeholder="Your name"></div>
+          <div class="field"><label>Mobile</label><input id="customerMobile" placeholder="Optional"></div>
+          <div class="field"><label>Table / Room</label><input id="tableNo" placeholder="e.g. T-12"></div>
+          <div class="field"><label>Order type</label>
+            <select id="orderType"><option>Dine-in</option><option>Takeaway</option><option>Hostel delivery</option></select>
+          </div>
+        </div>
+        <div class="bill-preview" id="billPreview"></div>
+        <div class="modal-actions">
+          <button class="print" onclick="window.print()">🖨 Print Bill</button>
+          <button class="whatsapp" onclick="sendWhatsApp()">💬 Send on WhatsApp</button>
+        </div>
+        <div class="notice">Prices are treated as tax-inclusive, matching the supplied menu. Replace the WhatsApp number in <b>app.js</b> before publishing.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
